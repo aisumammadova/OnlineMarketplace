@@ -68,23 +68,29 @@ class ProductsFragment : Fragment() {
 
     fun bindDataToChip(categories: List<String>){
         binding.chipGroup.removeAllViews()
-        categories.forEach {
+        categories.forEach { // do not use foreach loop for showing products it causes lagging
             category ->
 
             val chip = Chip(requireContext()).apply {
                 text = category
                 isCheckable = true
                 isClickable = true
-                setOnCheckedChangeListener { _,isChecked ->
-                    if(isChecked){
-                    viewModel.loadProductsByCategory(category)
-                    }
-                    else{
-                        viewModel.loadProducts()
-                    }
-                }
-            binding.chipGroup.addView(this)
+                binding.chipGroup.addView(this)
         }
+        }
+        binding.chipGroup.setOnCheckedStateChangeListener { // rely on chip group and separate ids of categories
+            // setOnCheckedChangeListener deprecated version suitable for single selection
+
+                group, checkedIds -> // better for multiple selection
+            if(checkedIds.isEmpty()){
+                viewModel.loadProducts()
+            }
+            else{
+
+                val category = group.findViewById<Chip>(checkedIds[0]).text.toString()
+                viewModel.loadProductsByCategory(category)
+            }
+
 
     }
     }

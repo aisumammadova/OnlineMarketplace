@@ -92,7 +92,8 @@
         android:text="edit"
         android:textSize="20sp"
         app:layout_constraintWidth_percent="0.5"
-        android:layout_marginBottom="24dp"/>
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/button_purple"/>
 
 
 
